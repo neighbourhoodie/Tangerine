@@ -230,7 +230,6 @@ export class SyncService {
     let i = 0
     for (let row of result.rows) {
       if (row.doc.views) {
-        console.time('*** time indexing viewpath')
         for (let viewId in row.doc.views) {
           const viewPath = `${row.doc._id.replace('_design/', '')}/${viewId}`
           if (!exclude.includes(viewPath)) {
@@ -239,7 +238,6 @@ export class SyncService {
             await db.query(viewPath, { limit: 1 })
             console.timeEnd(`*** time indexing viewpath: ${viewPath}`)
           }
-        console.timeEnd('*** time indexing viewpath')
         }
       }
       this.syncMessage$.next({ message: `${window['t']('Optimizing data. Please wait...')} ${Math.round((i/result.rows.length)*100)}%` })
