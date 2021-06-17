@@ -7,8 +7,10 @@ import * as PouchDBUpsert from 'pouchdb-upsert';
 import debugPouch from 'pouchdb-debug';
 PouchDB.plugin(debugPouch);
 import PouchDBFind from 'pouchdb-find';
+import PouchDBIndexedDB from 'pouchdb-adapter-indexeddb';
 PouchDB.plugin(PouchDBFind);
 PouchDB.plugin(PouchDBUpsert);
+PouchDB.plugin(PouchDBIndexedDB);
 PouchDB.plugin(cordovaSqlitePlugin);
 PouchDB.plugin(window['PouchReplicationStream'].plugin);
 PouchDB.adapter('writableStream', window['PouchReplicationStream'].adapters.writableStream);
@@ -27,7 +29,8 @@ export function DB(name, key = ''):PouchDB {
   let pouchDBOptions = <any>{};
   if (window['isCordovaApp'] && window['sqliteStorageFile'] && !window['turnOffAppLevelEncryption']) {
     pouchDBOptions = {
-      adapter: 'cordova-sqlite',
+      adapter: 'indexeddb',
+      view_adapter: 'cordova-sqlite',
       location: 'default',
       androidDatabaseImplementation: 2
     };
@@ -49,5 +52,3 @@ export function DB(name, key = ''):PouchDB {
     console.trace();
   }
 }
-
-
