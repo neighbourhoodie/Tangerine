@@ -42,7 +42,7 @@ export class SyncCouchdbService {
   public readonly syncMessage$: Subject<any> = new Subject();
   public readonly onCancelled$: Subject<any> = new Subject();
   cancelling = false
-  syncing = false 
+  syncing = false
   batchSize = 200
   initialBatchSize = 1000
   writeBatchSize = 50
@@ -50,7 +50,7 @@ export class SyncCouchdbService {
   pullSyncOptions;
   pushSyncOptions;
   fullSync: string;
-  
+
   constructor(
     private http: HttpClient,
     private variableService: VariableService,
@@ -172,6 +172,7 @@ export class SyncCouchdbService {
   }
 
   _push (userDb, remoteDb, syncOptions) {
+    console.log(JSON.stringify(syncOptions))
     return new Promise( (resolve, reject) => {
       let checkpointProgress = 0, diffingProgress = 0, startBatchProgress = 0, pendingBatchProgress = 0
       const direction = 'push'
@@ -262,7 +263,7 @@ export class SyncCouchdbService {
       });
     })
   }
-  
+
   async push(userDb, remoteDb, appConfig, syncDetails): Promise<ReplicationStatus> {
     // Get the sequences we'll be starting with.
     let push_last_seq = await this.variableService.get('sync-push-last_seq')
@@ -278,7 +279,7 @@ export class SyncCouchdbService {
       'direction': 'push',
       'message': 'About to push any new data to the server.'
     }
-    
+
     this.syncMessage$.next(progress)
 
     let status = <ReplicationStatus>{
@@ -287,7 +288,7 @@ export class SyncCouchdbService {
       remaining: 0,
       direction: 'push'
     };
-    
+
     let failureDetected = false
     let pushed = 0
     let syncOptions = {
@@ -321,7 +322,7 @@ export class SyncCouchdbService {
       }
       failureDetected = true
     }
-    
+
     status.initialPushLastSeq = push_last_seq
     status.currentPushLastSeq = status.info.last_seq
 
@@ -337,6 +338,7 @@ export class SyncCouchdbService {
   }
 
   _pull(userDb, remoteDb, syncOptions):Promise<ReplicationStatus> {
+    console.log(JSON.stringify(syncOptions))
     return new Promise( (resolve, reject) => {
       let checkpointProgress = 0, diffingProgress = 0, startBatchProgress = 0, pendingBatchProgress = 0
       let status = <ReplicationStatus>{
@@ -430,7 +432,7 @@ export class SyncCouchdbService {
       pullConflicts: [],
       info: '',
       remaining: 0,
-      direction: 'pull' 
+      direction: 'pull'
     };
     let pull_last_seq = await this.variableService.get('sync-pull-last_seq')
     if (typeof pull_last_seq === 'undefined') {
@@ -448,11 +450,11 @@ export class SyncCouchdbService {
     let failureDetected = false
     let error;
     let pulled = 0
-    
+
     /**
-     * The sync option batches_limit is set to 1 in order to reduce the memory load on the tablet. 
-     * From the pouchdb API doc:      
-     * "Number of batches to process at a time. Defaults to 10. This (along wtih batch_size) controls how many docs 
+     * The sync option batches_limit is set to 1 in order to reduce the memory load on the tablet.
+     * From the pouchdb API doc:
+     * "Number of batches to process at a time. Defaults to 10. This (along wtih batch_size) controls how many docs
      * are kept in memory at a time, so the maximum docs in memory at once would equal batch_size × batches_limit."
      */
     let syncOptions = {
@@ -465,9 +467,9 @@ export class SyncCouchdbService {
       "checkpoint": 'target',
       "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : null
     }
-    
+
     syncOptions = this.pullSyncOptions ? this.pullSyncOptions : syncOptions
-    
+
     try {
       status = <ReplicationStatus>await this._pull(userDb, remoteDb, syncOptions);
       if (typeof status.pulled !== 'undefined') {
@@ -482,7 +484,7 @@ export class SyncCouchdbService {
       failureDetected = true
       error = e
     }
-    
+
     status.initialPullLastSeq = pull_last_seq
     status.currentPushLastSeq = status.info.last_seq
     status.batchSize = batchSize
@@ -539,5 +541,5 @@ export class SyncCouchdbService {
     }
     return pullSelector;
   }
-    
+
 }

@@ -44,6 +44,7 @@ export function DB(name, key = ''):PouchDB {
   let pouch;
 
   try {
+    pouchDBOptions.changes_batch_size = 1000 // test: 1000, 500, 250, 100, 50, 25
     pouch = new PouchDB(name, pouchDBOptions);
     pouch.crypto("example password horse battery etc") // FIXME obviously don't do this ever
     return pouch
