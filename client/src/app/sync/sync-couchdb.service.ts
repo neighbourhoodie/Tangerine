@@ -19,7 +19,7 @@ import { SyncDirection } from './sync-direction.enum';
 const sleep = (milliseconds) => new Promise((res) => setTimeout(() => res(true), milliseconds))
 const retryDelay = 5*1000
 
-const CHANGES_BATCH_SIZE = 250
+const CHANGES_BATCH_SIZE = 100
 
 export interface LocationQuery {
   level:string
