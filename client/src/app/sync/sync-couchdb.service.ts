@@ -43,7 +43,7 @@ export class SyncCouchdbService {
   public readonly onCancelled$: Subject<any> = new Subject();
   cancelling = false
   syncing = false
-  batchSize = 200
+  batchSize = 1000
   initialBatchSize = 1000
   writeBatchSize = 50
   streamBatchSize = 25
@@ -172,6 +172,7 @@ export class SyncCouchdbService {
   }
 
   _push (userDb, remoteDb, syncOptions) {
+    console.log(JSON.stringify(syncOptions))
     return new Promise( (resolve, reject) => {
       let checkpointProgress = 0, diffingProgress = 0, startBatchProgress = 0, pendingBatchProgress = 0
       const direction = 'push'
@@ -294,7 +295,7 @@ export class SyncCouchdbService {
       "since":push_last_seq,
       "batch_size": this.batchSize,
       "batches_limit": 1,
-      "batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : 1000,
+      "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : null,
       "remaining": 100,
       "pushed": pushed,
       "checkpoint": 'source',
@@ -304,7 +305,6 @@ export class SyncCouchdbService {
     }
 
     syncOptions = this.pushSyncOptions ? this.pushSyncOptions : syncOptions
-    console.log(JSON.stringify(syncOptions))
 
     try {
       status = <ReplicationStatus>await this._push(userDb, remoteDb, syncOptions);
@@ -338,6 +338,7 @@ export class SyncCouchdbService {
   }
 
   _pull(userDb, remoteDb, syncOptions):Promise<ReplicationStatus> {
+    console.log(JSON.stringify(syncOptions))
     return new Promise( (resolve, reject) => {
       let checkpointProgress = 0, diffingProgress = 0, startBatchProgress = 0, pendingBatchProgress = 0
       let status = <ReplicationStatus>{
@@ -464,11 +465,10 @@ export class SyncCouchdbService {
       "pulled": pulled,
       "selector": pullSelector,
       "checkpoint": 'target',
-      "batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : 1000
+      "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : null
     }
 
     syncOptions = this.pullSyncOptions ? this.pullSyncOptions : syncOptions
-    console.log(JSON.stringify(syncOptions))
 
     try {
       status = <ReplicationStatus>await this._pull(userDb, remoteDb, syncOptions);
