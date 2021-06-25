@@ -19,6 +19,8 @@ import { SyncDirection } from './sync-direction.enum';
 const sleep = (milliseconds) => new Promise((res) => setTimeout(() => res(true), milliseconds))
 const retryDelay = 5*1000
 
+const CHANGES_BATCH_SIZE = 1000
+
 export interface LocationQuery {
   level:string
   id:string
@@ -295,7 +297,7 @@ export class SyncCouchdbService {
       "since":push_last_seq,
       "batch_size": this.batchSize,
       "batches_limit": 1,
-      "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : null,
+      "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : CHANGES_BATCH_SIZE,
       "remaining": 100,
       "pushed": pushed,
       "checkpoint": 'source',
@@ -465,7 +467,7 @@ export class SyncCouchdbService {
       "pulled": pulled,
       "selector": pullSelector,
       "checkpoint": 'target',
-      "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : null
+      "changes_batch_size": appConfig.changes_batch_size ? appConfig.changes_batch_size : CHANGES_BATCH_SIZE
     }
 
     syncOptions = this.pullSyncOptions ? this.pullSyncOptions : syncOptions
