@@ -228,7 +228,7 @@ export class SyncService {
     })
 
     console.time('*** time indexing allViews')
-    await db.query('allViews', { limit: 1 })
+    await db.query('allViews/sync-queue', { limit: 1 })
     console.timeEnd('*** time indexing allViews')
     console.time('*** time indexing search')
     await db.query('search', { limit: 1 })
