@@ -1,5 +1,6 @@
 import { CaseReportsComponent } from './components/case-reports/case-reports.component';
-import { CaseHomeDocs } from './case-home.docs';
+// import { CaseHomeDocs } from './case-home.docs';
+import { AllViews } from '../core/all-views.docs';
 import { DEFAULT_USER_DOCS } from './../shared/_tokens/default-user-docs.token';
 import { CaseEventScheduleComponent } from './components/case-event-schedule/case-event-schedule.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -29,7 +30,7 @@ import { CommonModule } from '@angular/common';
   providers: [
     {
       provide: DEFAULT_USER_DOCS,
-      useValue: CaseHomeDocs,
+      useValue: AllViews,
       multi: true
     }
   ]

@@ -205,14 +205,14 @@ export class SyncService {
   async indexViews() {
     console.time('*** indexViews total time')
     const exclude = [
-      'tangy-form/responsesLockedAndNotUploaded',
-      'tangy-form/responsesUnLockedAndNotUploaded',
-      'tangy-form/responsesLockedAndUploaded',
-      'tangy-form/responsesUnLockedAndUploaded',
-      'tangy-form/responseByUploadDatetime',
-      'responsesUnLockedAndNotUploaded',
-      'sync-queue',
-      'sync-conflicts',
+      'allViews/tangy-form-responsesLockedAndNotUploaded',
+      'allViews/tangy-form-responsesUnLockedAndNotUploaded',
+      'allViews/tangy-form-responsesLockedAndUploaded',
+      'allViews/tangy-form-responsesUnLockedAndUploaded',
+      'allViews/tangy-form-responseByUploadDatetime',
+      'allViews/responsesUnLockedAndNotUploaded',
+      'allViews/sync-queue',
+      'allViews/sync-conflicts',
       'tangy-form',
       'find-docs-by-form-id-pageable/find-docs-by-form-id-pageable'
     ]
@@ -230,7 +230,7 @@ export class SyncService {
     let i = 0
     for (let row of result.rows) {
       if (row.doc.views) {
-        for (let viewId in row.doc.views) {
+        // for (let viewId in row.doc.views) {
           const viewPath = `${row.doc._id.replace('_design/', '')}/${viewId}`
           if (!exclude.includes(viewPath)) {
             console.log(`Indexing: ${viewPath}`)
@@ -238,7 +238,7 @@ export class SyncService {
             await db.query(viewPath, { limit: 1 })
             console.timeEnd(`*** time indexing viewpath: ${viewPath}`)
           }
-        }
+        // }
       }
       this.syncMessage$.next({ message: `${window['t']('Optimizing data. Please wait...')} ${Math.round((i/result.rows.length)*100)}%` })
       i++

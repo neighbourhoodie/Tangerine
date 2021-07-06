@@ -44,7 +44,7 @@ export class DashboardService {
 
   async getMyClasses() {
     this.db = await this.getUserDB();
-    const result = await this.db.query('tangy-form/responsesByFormId', {
+    const result = await this.db.query('allViews/tangy-form-responsesByFormId', {
       key: 'class-registration',
       include_docs: true
     });

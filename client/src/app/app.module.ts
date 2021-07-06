@@ -1,4 +1,5 @@
-import { AppDocs } from './app.docs';
+// import { AppDocs } from './app.docs';
+import { AllViews } from './core/all-views.docs';
 import { DEFAULT_USER_DOCS } from './shared/_tokens/default-user-docs.token';
 import { CaseHomeModule } from './case-home/case-home.module';
 import { SyncModule } from './sync/sync.module';
@@ -78,7 +79,7 @@ export function initializeApp1(appInit: AppInit) {
     { provide: APP_INITIALIZER, useFactory: initializeApp1, deps: [AppInit], multi: true},
     {
       provide: DEFAULT_USER_DOCS,
-      useValue: AppDocs,
+      useValue: AllViews,
       multi: true
     }
   ],

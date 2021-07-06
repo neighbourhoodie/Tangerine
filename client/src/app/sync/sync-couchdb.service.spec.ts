@@ -1,7 +1,8 @@
 import PouchDB from 'pouchdb';
 import { UserDatabase } from './../shared/_classes/user-database.class';
 import { AppConfig } from './../shared/_classes/app-config.class';
-import { SYNC_DOCS } from './sync.docs';
+// import { SYNC_DOCS } from './sync.docs';
+import { AllViews } from '../core/all-views.docs';
 import { DEFAULT_USER_DOCS } from './../shared/_tokens/default-user-docs.token';
 import { AppConfigService } from 'src/app/shared/_services/app-config.service';
 import { FormInfo, CouchdbSyncSettings, CustomSyncSettings } from './../tangy-forms/classes/form-info.class';
@@ -311,7 +312,7 @@ describe('SyncCouchdbService', () => {
       {provide: AppConfigService, useClass: MockAppConfigService},
        {
           provide: DEFAULT_USER_DOCS,
-          useValue: SYNC_DOCS,
+          useValue: AllViews,
           multi: true
         },
         UserService,

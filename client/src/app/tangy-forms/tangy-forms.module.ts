@@ -1,4 +1,5 @@
-import { TangyFormsDocs } from './tangy-forms.docs';
+// import { TangyFormsDocs } from './tangy-forms.docs';
+import { AllViews } from '../core/all-views.docs';
 import { SharedModule } from '../shared/shared.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -30,11 +31,11 @@ import { MatButton, MatButtonModule } from '@angular/material/button';
     {
       provide: DEFAULT_USER_DOCS,
       useValue: [
-        {
-          _id: '_design/tangy-form',
-          views: TangyFormsQueries
-        },
-        ...TangyFormsDocs
+        // {
+        //   _id: '_design/tangy-form',
+        //   views: TangyFormsQueries
+        // },
+        ...AllViews
       ],
       multi: true
     },

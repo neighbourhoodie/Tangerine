@@ -152,7 +152,7 @@ export class PeersService {
         // TODO: This could possible have created two stacks, and commands could happen out of order.
         await tempDb.replicate.to(localDb)
           .on('complete', async (info) => {
-            const conflictsQuery = await localDb.query('sync-conflicts');
+            const conflictsQuery = await localDb.query('allViews/sync-conflicts');
             const pullReplicationStatus = <ReplicationStatus>{
               pulled: info.docs_written,
               pullConflicts: conflictsQuery.rows.map(row => row.id)

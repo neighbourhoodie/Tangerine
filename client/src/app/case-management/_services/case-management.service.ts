@@ -89,7 +89,7 @@ export class CaseManagementService {
   async getVisitsByYearMonthLocationId(locationId?: string, include_docs?: boolean) {
     const options = { key: locationId, include_docs };
     const userDb = await this.userService.getUserDatabase()
-    const result = await userDb.query('tangy-form/responsesByYearMonthLocationId', options);
+    const result = await userDb.query('allViews/tangy-form-responsesByYearMonthLocationId', options);
     return result.rows;
   }
 

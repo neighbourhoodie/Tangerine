@@ -95,7 +95,7 @@ export class SyncingService {
         ...results.rows.map(row => row.id)
       ]
     }
-    const results = await DB.query('tangy-form/responsesLockedAndNotUploaded', {keys: includeByFormId});
+    const results = await DB.query('allViews/tangy-form-responsesLockedAndNotUploaded', {keys: includeByFormId});
     localNotUploadedDocIds = [
       ...localNotUploadedDocIds,
       ...results.rows.map(row => row.id)

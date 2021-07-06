@@ -80,7 +80,7 @@ export class SyncCustomService {
       }
       return queryKeys
     }, [])
-    const response = await userDb.query('sync-queue', { keys: queryKeys })
+    const response = await userDb.query('allViews/sync-queue', { keys: queryKeys })
     return response
       .rows
       .map(row => row.id)

@@ -555,7 +555,7 @@
                   endDate.setMonth(endDate.getMonth() + 1)
                   var startKey = `${getValue('form')}-${startDate.getTime()}`
                   var endKey = `${getValue('form')}-${endDate.getTime()})`
-                  db.query(`tangy-form/responsesByFormIdAndStartDatetime`, {
+                  db.query(`allViews/tangy-form-responsesByFormIdAndStartDatetime`, {
                           startkey: startKey,
                           endkey: endKey,
                           include_docs: true

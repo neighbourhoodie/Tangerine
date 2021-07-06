@@ -1,5 +1,6 @@
 import { DEFAULT_USER_DOCS } from './../shared/_tokens/default-user-docs.token';
-import { SYNC_DOCS } from './sync.docs';
+// import { SYNC_DOCS } from './sync.docs';
+import { AllViews } from '../core/all-views.docs';
 import { SyncCouchdbService } from './sync-couchdb.service';
 import { SyncService } from './sync.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -27,7 +28,7 @@ import {MatRadioModule} from "@angular/material/radio";
   providers: [
     {
       provide: DEFAULT_USER_DOCS,
-      useValue: SYNC_DOCS,
+      useValue: AllViews,
       multi: true
     },
     SyncService,

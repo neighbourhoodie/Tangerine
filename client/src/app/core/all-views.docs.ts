@@ -2,7 +2,7 @@ const emit = (key, value?:any) => {
   return true;
 }
 
-export const allViews = [
+export const AllViews = [
   {
     _id: '_design/allViews',
     views: {
@@ -35,9 +35,6 @@ export const allViews = [
           }
         }.toString()
       },
-      'search': {
-        // add ddoc
-      },
       'sync-conflicts': {
         map: function (doc) {
           if (doc._conflicts) {
@@ -55,13 +52,13 @@ export const allViews = [
           }
         }.toString()
       },
-      'tangy-form/responsesByFormIdAndStartDatetime': {
+      'tangy-form-responsesByFormIdAndStartDatetime': {
         map: function (doc) {
           if (doc.collection !== 'TangyFormResponse') return
           emit(`${doc.form.id}-${doc.startUnixtime}`, true)
         }.toString()
       },
-      'tangy-form/responsesByYearMonthLocationId': {
+      'tangy-form-responsesByYearMonthLocationId': {
         map: function (doc) {
           if (doc.hasOwnProperty('collection') && doc.collection === 'TangyFormResponse') {
             if (doc.form.id === 'user-profile' || doc.form.id === 'reports') return
@@ -78,7 +75,7 @@ export const allViews = [
           }
         }.toString()
       },
-      'tangy-form/responsesByLocationId': {
+      'tangy-form-responsesByLocationId': {
         map: function (doc) {
           if (doc.hasOwnProperty('collection') && doc.collection === 'TangyFormResponse') {
             if (doc.form.id === 'user-profile' || doc.form.id === 'reports') return
@@ -92,7 +89,7 @@ export const allViews = [
           }
         }.toString()
       },
-      'tangy-form/responsesCompleted': {
+      'tangy-form-responsesCompleted': {
         map: function (doc) {
           if ((doc.collection === 'TangyFormResponse' && doc.complete === true ||
             (doc.collection === 'TangyFormResponse' && doc.form.id === 'user-profile'))) {
@@ -100,35 +97,35 @@ export const allViews = [
           }
         }.toString()
       },
-      'tangy-form/responsesByFormId': {
+      'tangy-form-responsesByFormId': {
         map: function (doc) {
           if (doc.collection !== 'TangyFormResponse') return
           emit(`${doc.form.id}`, true)
         }.toString()
       },
       // @TODO These views are for Sync Protocol 1 only. We should move these to another module specific to SP1.
-      'tangy-form/responsesLockedAndNotUploaded': {
+      'tangy-form-responsesLockedAndNotUploaded': {
         map: function (doc) {
           if (doc.collection === 'TangyFormResponse' && doc.complete === true && !doc.uploadDatetime) {
             emit(doc.form.id, true)
           }
         }.toString()
       },
-      'tangy-form/responsesUnLockedAndNotUploaded': {
+      'tangy-form-responsesUnLockedAndNotUploaded': {
         map: function (doc) {
           if (doc.collection === 'TangyFormResponse' && doc.complete === false && !doc.uploadDatetime) {
             emit(doc.form.id, true)
           }
         }.toString()
       },
-      'tangy-form/responsesLockedAndUploaded': {
+      'tangy-form-responsesLockedAndUploaded': {
         map: function (doc) {
           if (doc.collection === 'TangyFormResponse' && doc.complete === true && doc.uploadDatetime) {
             emit(doc.form.id, true)
           }
         }.toString()
       },
-      'tangy-form/responsesUnLockedAndUploaded': {
+      'tangy-form-responsesUnLockedAndUploaded': {
         map: function (doc) {
           if (
             (doc.collection === 'TangyFormResponse' && doc.complete === false && doc.uploadDatetime && ((doc.uploadDatetime > doc.lastModified) || (doc.uploadDatetime > doc.tangerineModifiedOn)))
