@@ -254,7 +254,7 @@ export class AppComponent implements OnInit {
     let availableFreeSpace = storageEstimate.quota - storageEstimate.usage
     while(availableFreeSpace < minimumFreeSpace) {
       const DB = await this.userService.getUserDatabase(this.userService.getCurrentUser())
-      const results = await DB.query('alLViews/tangy-form-responseByUploadDatetime', {
+      const results = await DB.query('allViews/tangy-form-responseByUploadDatetime', {
         descending: false,
         limit: batchSize,
         include_docs: true
